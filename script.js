@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cím és számláló
     const title = document.createElement('h2');
     title.innerHTML = '🧑‍🚀 Jelenleg az űrben';
+    title.style.color = 'white';
+    title.style.textAlign = 'center';
+    title.style.marginBottom = '8px';
+    title.style.fontSize= '1.5em'
     container.appendChild(title);
 
     const count = document.createElement('div');
@@ -31,27 +35,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Betöltés és hibaüzenet
     const msg = document.createElement('div');
     msg.className = 'msg';
+    msg.style.color = 'white';
     container.appendChild(msg);
+
+    // loader
+    const loader = document.createElement('div');
+    loader.className = 'loader';
+    loader.style.display = 'none'; // Hidden by default
+    container.appendChild(loader);
 
     // Adatok tárolása
     let allPeople = [];
 
     // Lekérés
     async function fetchData() {
-        msg.textContent = 'Betöltés...';
-        try {
-            const res = await fetch('http://api.open-notify.org/astros.json');
-            if (!res.ok) throw new Error('Hiba a lekérés során!');
-            const data = await res.json();
-            allPeople = data.people;
-            count.textContent = `${data.number} fő tartózkodik.`;
-            fillStations();
-            renderCards();
-            msg.textContent = '';
-        } catch (e) {
-            msg.textContent = 'Nem sikerült betölteni az adatokat!';
-        }
+    msg.textContent = 'Betöltés...';
+    loader.style.display = 'block'; // Show loader
+
+    try {
+        const res = await fetch('http://api.open-notify.org/astros.json');
+        if (!res.ok) throw new Error('Hiba a lekérés során!');
+        const data = await res.json();
+        allPeople = data.people;
+        count.textContent = `${data.number} fő tartózkodik.`;
+        fillStations();
+        renderCards();
+        msg.textContent = '';
+    } catch (e) {
+        msg.textContent = 'Nem sikerült betölteni az adatokat!';
+    } finally {
+        loader.style.display = 'none'; // Hide loader
     }
+}
 
     // Szűrő feltöltése
     function fillStations() {
