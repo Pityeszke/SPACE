@@ -1,0 +1,13 @@
+#adat_kártyák {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#adat_kártyák .kártya {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    width: calc(33% - 32px);
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+}
