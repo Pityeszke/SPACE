@@ -38,10 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lekérés
     async function fetchData() {
-        msg.textContent = 'Betöltés...';
         try {
             const res = await fetch('http://api.open-notify.org/astros.json');
-            if (!res.ok) throw new Error('Hiba a lekérés során!');
+            if (!res.ok) throw new Error('Hálózati hiba');
             const data = await res.json();
             allPeople = data.people;
             count.textContent = `${data.number} fő tartózkodik.`;
